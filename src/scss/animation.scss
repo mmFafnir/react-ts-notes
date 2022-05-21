@@ -1,0 +1,13 @@
+
+
+.anim-opacity{
+    animation: opacity 0.4s ease 1 ;
+}
+@keyframes opacity {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

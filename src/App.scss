@@ -1,0 +1,23 @@
+.App{
+    height: 100%;
+}
+.App__wrapper{
+    height: 100%;
+    display: flex;
+    
+}
+.notes__body{
+    height: 100%;
+    display: flex;
+    padding: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    > div{
+      // width:  304px;
+    
+    //   flex: 0 0 304px;  
+      margin: 20px;
+    }
+}

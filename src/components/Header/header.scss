@@ -1,0 +1,20 @@
+
+
+.header{
+    &__wrapper{
+        padding: 10px 20px;
+        display: flex;
+    }
+
+    &__left{
+        display: flex;
+        flex: 0 1 1000px;
+        > div{
+            display: flex;
+        }
+    }
+
+    &__right{
+
+    }
+}

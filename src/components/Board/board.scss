@@ -1,0 +1,74 @@
+.board{
+    width: 100%;
+    height: 70px;
+    padding: 0px 20px;
+    position: fixed;
+    background-color: #fff;
+    z-index: 20;
+    top: -100%;
+    left: 0px;
+    transition-duration: 0.5s;
+
+    &.active{
+        top: 0px;
+    }
+
+    &__wrapper{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        >div{
+            display: flex;
+            align-items: center;
+        }
+    }
+    &__close{
+        width: 50px;
+        height: 50px;
+        padding: 15px;
+        margin-right: 10px;
+        transition-duration: 0.3s;
+        border-radius: 50%;
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+        
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.138);
+        }
+    }
+    &__title{
+        font-size: 22px;
+
+    }
+
+
+    &__btns{
+        display: flex;
+        button{
+            width: 44px;
+            height: 44px;
+            padding: 10px;
+            transition-duration: 0.3s;
+            border-radius: 50%;
+            margin-right: 20px;
+            &:last-child{
+                margin-right: 0;
+            }
+            svg{
+                width: 100%;
+                height: 100%;
+                fill:rgba(27, 97, 196, 0.986);
+            }
+
+            &:hover{
+                background-color: rgba(0, 0, 0, 0.138);
+
+            }
+        }
+    }
+}

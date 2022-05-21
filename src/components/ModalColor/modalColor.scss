@@ -1,0 +1,34 @@
+
+.modal-color{
+    position: absolute;
+    bottom: -50px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.254), 0 2px 6px 2px rgba(60, 64, 67, 0.082);
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
+    &__wrapper{
+        width: 100%;
+        height: 100%;
+
+    }
+
+    &__body{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        button{
+            border: solid 1px rgba(0, 0, 0, 0.152);
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+
+            &:last-child{
+                margin-right: 0;
+            }
+        }   
+    }
+
+    
+}

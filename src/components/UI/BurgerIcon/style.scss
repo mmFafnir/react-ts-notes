@@ -1,0 +1,13 @@
+
+.burger-icon{
+    width: 44px;
+    height: 44px;
+    transition-duration: 0.3s;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.185);
+    }
+}
