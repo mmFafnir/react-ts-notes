@@ -1,33 +1,38 @@
 
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import {ITask} from '../../types/task';
+
+
+
+
+
 import Task from '../Task';
 
-import './TaskCreate.scss'
+import './formCreateTasks.scss'
 
 interface IProps {
-    getTasks: (arr: ITask[]) => void
+    getTasks: (arr: ITask[]) => void,
+    stateTask?: ITask[]
 }
 
-const TaskCreate: FC<IProps> = ({
-    getTasks
+const FormCreateTasks: FC<IProps> = ({
+    getTasks, stateTask=[]
 }) => {
 
     const [value, setValue] = useState<string>('');
-    const [tasks, setTasks] = useState<ITask[]>([]);
+    const [tasks, setTasks] = useState<ITask[]>(stateTask);
 
     
     const changeHandler = (e:ChangeEvent<HTMLInputElement>) => {
        setValue(e.target.value);
-    }
+     }
 
     const clearInput = ():void => {
         setValue('');
     }
 
-
-    const addTask = () => { 
-        if(value.length < 0) return
+    const addTask = () => {
+        if(value.length === 0) return
         const obj = {
             id: `task${Date.now()}`,
             value: value,
@@ -39,7 +44,7 @@ const TaskCreate: FC<IProps> = ({
 
     const changeCheckedHandler = (id:string|number, checked: boolean) => {
         setTasks(
-            tasks.map((task:ITask) => {
+            state => state.map((task:ITask) => {
                 if(task.id == id) {
                     task.checked = checked
                 }
@@ -48,22 +53,39 @@ const TaskCreate: FC<IProps> = ({
         )
     }
 
+    const changeValueHandler = (id:string|number, value:string) => {
+        setTasks(
+            state => state.map((task:ITask) => {
+                if(task.id == id) {
+                    task.value = value
+                }
+                return task
+            })
+        )
+    }
 
+    const handlerDelete = (id: string|number) => {
+        console.log(id)
+        setTasks(tasks.filter(task => task.id !== id))
+    }
+    
     useEffect(() => {
         getTasks(tasks)
     }, [tasks])
-
 
     return (
         <div className='create-task'>
             <div className="create-task__body">
                 {
                     tasks.map(task => (
-                        <Task key={task.id} 
+                        <Task 
+                            key={stateTask ? 'edit-' + task.id : task.id} 
                             value={task.value} 
-                            id={task.id} 
+                            id={stateTask ? 'edit-' + task.id : task.id} 
                             checked={task.checked}
-                            handlerCheck={(id, checked) =>  changeCheckedHandler(id, checked)} 
+                            handlerCheck={(checked:boolean) =>  changeCheckedHandler(task.id, checked)} 
+                            getValue={(value:string) =>  changeValueHandler(task.id, value)}
+                            onDelete={(id: string|number) => handlerDelete(task.id)}
                         />
                     ))
                 }           
@@ -81,4 +103,4 @@ const TaskCreate: FC<IProps> = ({
     );
 };
 
-export default TaskCreate;
+export default FormCreateTasks;

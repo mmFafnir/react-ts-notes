@@ -1,34 +1,40 @@
 
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTypeSelector } from '../../hooks/useTypeSelector';
 import { deleteNotes, PutNotes } from '../../store/action-creators/notes';
 import { deleteTasks, PutTasks } from '../../store/action-creators/tasks';
-import { types } from '../CreateNote';
+import INote from '../../types/note';
+import ITaskNote from '../../types/task';
+import { types } from '../FormCreateNote';
 import ModalColor from '../ModalColor';
+import Loading from '../UI/Loading';
 
 
 import './board.scss';
 
 interface IProps {
     checkedNodes: string[];
-    setCheckedNotes: (item: string[]) => void 
-    content: any[];
-    setContent: (notes:any[]) => void
+    setCheckedNotes: (item: string[]) => void;
+    
+    // content: any[];
+    // setContent: (notes:any[]) => void
 }
 
 const Board:FC<IProps>= ({
-    checkedNodes, content, setContent, setCheckedNotes
+    checkedNodes, setCheckedNotes, 
 }) => {
 
     const dispatch = useDispatch<any>();
 
+    const content = useTypeSelector(state => state.content);
     const [active, setActive] = useState<boolean>(false);
 
     const [openModalColor, setOpenModalColor] = useState<boolean>(false);
     const [color, setColor] = useState<string>('');
 
     const getCurrentContent = () => {
-        var clonedArr = JSON.parse(JSON.stringify(content));
+        var clonedArr = JSON.parse(JSON.stringify(content.data));
         const currentContent = clonedArr.map((note:any) => {
             if(note.type == types.TASK){
                 note.id = `tasks${note.id}`;
@@ -36,28 +42,51 @@ const Board:FC<IProps>= ({
             }
             return note
         }) 
-        console.log(currentContent)
         return currentContent
     }
     
     const changeColor = () => {
         checkedNodes.forEach(id => {
-            const note = getCurrentContent().filter(item => id == item.id)[0];
-            note.color = color;
-            
+            const note = getCurrentContent().filter((item:any) => {
+                if(item.id === id) return item
+            })[0];
+            note.color = color;  
             if(note.type === types.NOTE){
                 dispatch(PutNotes(id, note))
                 
             } else if(note.type === types.TASK){
-                dispatch(PutTasks(id.replace("tasks", ''), note))
+                dispatch(PutTasks(id.replace(/tasks/ig,''), note))
+            }
+        })
+    }
+
+    const fixedNotes = () => {
+        let newNotes:any[] = [];
+        checkedNodes.forEach(id => {
+            const note = getCurrentContent().filter((item:any) => id == item.id)[0];
+            newNotes.push(note)
+        })
+        
+        const status = newNotes.find(note => note.fixed === true );  
+
+        newNotes.forEach((note) => {
+                
+            note.fixed = status ? false : true;
+            console.log(status)
+            if(note.type === types.NOTE){
+                dispatch(PutNotes(note.id, note))
+                
+            } else if(note.type === types.TASK){
+                dispatch(PutTasks(note.id.replace(/tasks/ig,''), note))
+                // dispatch(deleteTasks(id.replace("tasks", '')))
             }
         })
     }
 
     const deleteCards = () => {
         checkedNodes.forEach(id => {
-            const note = getCurrentContent().filter(item => id == item.id)[0];
-            console.log(getCurrentContent())            
+            const note = getCurrentContent().filter((item:any) => id == item.id)[0];
+            console.log(id)            
             if(note.type === types.NOTE){
                 dispatch(deleteNotes(id))
                 
@@ -68,13 +97,14 @@ const Board:FC<IProps>= ({
         closeBoard()
     }
 
+    
+
     const closeBoard  = () => {
         setActive(false);
         setOpenModalColor(false);
         setCheckedNotes([])
     }
 
-    console.log(color)
     useEffect(() => {
         if(color !== '' && openModalColor ) {
             changeColor()
@@ -105,6 +135,11 @@ const Board:FC<IProps>= ({
                 </div>  
                 <div className="board__right">
                     <div className="board__btns">
+                        <button
+                            onClick={fixedNotes}
+                        >   
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M32 32C32 14.33 46.33 0 64 0H320C337.7 0 352 14.33 352 32C352 49.67 337.7 64 320 64H290.5L301.9 212.2C338.6 232.1 367.5 265.4 381.4 306.9L382.4 309.9C385.6 319.6 383.1 330.4 377.1 338.7C371.9 347.1 362.3 352 352 352H32C21.71 352 12.05 347.1 6.04 338.7C.0259 330.4-1.611 319.6 1.642 309.9L2.644 306.9C16.47 265.4 45.42 232.1 82.14 212.2L93.54 64H64C46.33 64 32 49.67 32 32zM224 384V480C224 497.7 209.7 512 192 512C174.3 512 160 497.7 160 480V384H224z"></path></svg>
+                        </button>
                         <button 
                             onClick={() => setOpenModalColor(!openModalColor)}
                             className='color'>

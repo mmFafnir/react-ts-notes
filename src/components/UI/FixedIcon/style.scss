@@ -1,0 +1,23 @@
+.fixed-icon{
+    position: absolute;
+    z-index: 21;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    top: 10px;
+    border-radius: 50%;
+    padding: 7px;
+    transition-duration: 0.1s;
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.138);
+    }
+
+    &.fixed{
+        transform: rotate(45deg);
+    }
+    
+}
+
+
+
+

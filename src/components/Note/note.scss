@@ -7,7 +7,7 @@
     background-color: #fff;
     position: relative;
     z-index: 2;
-    
+
     
     &__mask{
         width: 100%;
@@ -40,9 +40,13 @@
             width: 700px;
             // transform: scale(1.4);
             left: 50%;
-            top: 20%;
-            transform: translate(-50%, -50%);   
+            top: 9%;
+            transform: translate(-50%, 0%);   
             z-index: 3;
+        }
+        .note__body{
+            max-height: 600px;
+            overflow: auto;
         }
         .note__close{
             opacity: 1;
@@ -58,6 +62,7 @@
         }
     }
     &__wrapper{
+        width: 100%;
         position: relative;
         // width: 305px;
         transition-duration: 0.5s;
@@ -66,6 +71,10 @@
         border-radius: 10px;
         background-color: #fff;
         border: solid 1px #e0e0e0;
+    }
+
+    &__fixed-icon{
+        opacity: 0;
     }
 
     &__btn-check{
@@ -100,6 +109,7 @@
     &__header{
         margin-bottom: 20px;
         input{
+            padding-right: 30px;
             font-size: 20px;
         }
     }
@@ -109,9 +119,15 @@
     }
     &__textarea{
         font-size: 16px;
+        line-height: 1.3;
     }
     &__body{
-        margin-bottom: 15px;
+        margin-bottom: 5px;
+        max-height: 300px;
+        padding: 1px 0px;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.241);
+        padding-bottom: 10px;
     }
 
     &__footer{
@@ -180,8 +196,13 @@
         }
     }
 
+    
+
     &:hover{
         .note__btn-check{
+            opacity: 1;
+        }
+        .note__fixed-icon{
             opacity: 1;
         }
     }

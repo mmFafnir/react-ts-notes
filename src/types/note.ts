@@ -5,9 +5,12 @@ export default interface INote {
     title: string;
     text: string;
     time: string|number;
-    color?: string;
+    color: string;
     change?: string|number;
-    images?: IImg[];
-    type: string
+    images: IImg[];
+    type: string;
+    fixed: boolean;
+    [key: string]: any;
+
 
 }

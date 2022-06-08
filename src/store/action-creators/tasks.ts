@@ -9,7 +9,7 @@ import { TasksPostActionType } from '../reducer/TaskReducer/postInterface';
 import { TasksPutActionType } from '../reducer/TaskReducer/putInterface';
 
 
-const baseUrl = 'https://627eb84b271f386ceffc7720.mockapi.io/'
+const baseUrl = 'https://627eb84b271f386ceffc7720.mockapi.io'
 
 export const fetchTasks = () => {
     return async (dispatch: any) => {
@@ -78,10 +78,10 @@ export const PutTasks = (id:string|number, task:ITaskNote) => {
             dispatch({type: TasksPutActionType.PUT__TASKS});
             const response = await axios.put(`${baseUrl}/tasks/${id}`, task);
             
-            
+            console.log(response)
             dispatch({
                 type: TasksPutActionType.PUT__TASKS_SUCCESS,
-                payload: response
+                payload: response.data
             })
         } catch(e) {
             dispatch({

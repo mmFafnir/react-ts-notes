@@ -78,7 +78,7 @@ export const PutNotes = (id:string, note:INote) => {
             
             dispatch({
                 type: NotesPutActionType.PUT__NOTES_SUCCESS,
-                payload: response
+                payload: response.data
 
             })
         } catch(e) {

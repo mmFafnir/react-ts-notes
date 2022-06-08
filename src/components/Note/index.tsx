@@ -4,150 +4,112 @@ import { deleteNotes, PutNotes } from '../../store/action-creators/notes';
 import { deleteTasks, PutTasks } from '../../store/action-creators/tasks';
 import IImg from '../../types/img';
 import INote from '../../types/note';
-import { ITask } from '../../types/task';
+import ITaskNote, { ITask } from '../../types/task';
 import ActionNote from '../ActionNote';
-import { types } from '../CreateNote';
+import { types } from '../FormCreateNote';
 import ImagesBlock from '../ImagesBlock';
 import ModalColor from '../ModalColor';
 import Task from '../Task';
+import FixedIcon from '../UI/FixedIcon';
 import Textarea from '../UI/Textarea';
 
 import './note.scss';
 
-const WIDTH__NOTE = 305;
-const WIDTH__NOTE_OPEN = 700;
+
 
 interface IProps {
-    id: string;
-    title: string,
-    text?: string;
-    tasks?: ITask[];
-    time: string|number,
-    color?: string,
-    change?: string|number,
-    type?: string,
-    images?: IImg[],
+    // id: string;
+    // title: string,
+    // text?: string;
+    // tasks?: ITask[];
+    // time: string|number,
+    // color?: string,
+    // change?: string|number,
+    // type: string,
+    // images?: IImg[],
+    // fixed?: boolean
+    note: INote|ITaskNote,
     checkedNotes: string[],
-    setCheckedNotes:(note:string[]) => void
+    setCheckedNotes:(note:string[]) => void;
+    setCurrentNote:(note: (ITaskNote|INote)|null) => void; 
+    changeContent: (note: ITaskNote|INote) => void
 }
 
-const Note:FC<IProps> = ({
-    id, text, time, title, color='#fff', change, type, tasks, images = [],
-    checkedNotes, setCheckedNotes 
-}) => {
+export const WIDTH__NOTE = 370;
 
+const Note:FC<IProps> = ({
+    // id, text = '', time, title, color='#fff', change, type = types.NOTE, tasks = [], images = [], fixed = false,
+    note,
+    checkedNotes, setCheckedNotes, setCurrentNote, changeContent, 
+}) => {
+    
 
     const [width, setwidth] = useState<number>(WIDTH__NOTE);
     const [checked, setChecked] = useState<boolean>(false)
 
-    const [currentTitle, setCurrentTitle] = useState<string>(title)     
-
-    const [textValue, setTextValue] = useState<string>(text ? text : '');
-    const [tasksValue,setTasksValue] = useState<ITask[]>(tasks ? tasks : []);
-    const [imagesValues, setImagesValues] = useState<IImg[]>(images);
+    const [currentTitle, setCurrentTitle] = useState<string>(note.title)     
+    const [imagesValues, setImagesValues] = useState<IImg[]>(note.images);
+    const [currentFixed, setCurrentFixed] = useState<boolean>(note.fixed)
     
     const [reset, setReset] = useState<boolean>(false);
-    const [open, setOpen] = useState<boolean>(false);
     
     const [modalColorOpen, setModalColorOpen] = useState<boolean>(false);
-    const [currentColor, setCurrentColor] = useState<string>(color)
+    const [currentColor, setCurrentColor] = useState<string>(note.color)
 
-    const placeholder = open ? 'Текст заметоки' : '';
-     
-    const [valueLenght, setValueLenght] = useState<number>(0);
-    const [disabled, setDisabled] = useState<boolean>(true);
-
-    const getValue = (value: string) => {
-        if(value == '\n'){
-            setDisabled(true);
-            setValueLenght(0)   
-            return
-        }
-        setDisabled(false);
-        setValueLenght(value.length )
-        setTextValue(value)
-    }
-
-    const changeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        setCurrentTitle(e.target.value);
-    }
-
-    const changeCheckedHandler = (id:string|number, checked: boolean) => {
-        setTasksValue(
-            tasksValue.map((task:ITask) => {
-                if(task.id == id) {
-                    task.checked = checked
-                }
-                return task
-            })
-        )
-    }
-    
-    const getNoteObj = () => {
-        return {
-            id: id,
-            title: currentTitle,
-            time: time,
-            color: currentColor,
-            images: imagesValues,
-            change: Date.now(),
-            type: types.NOTE,
-            text: textValue
-        }
-    }
-    const getTasksObj = () => {
-        return {
-            id: id,
-            type: types.TASK,
-            title: currentTitle,
-            tasks: tasksValue,
-            time: time,
-            color: currentColor,
-            images: imagesValues,
-            change: Date.now()
-        }
-
-    }
-    
-    const closeNote = () => {
-        if(type == types.NOTE) {
-            dispatch(PutNotes(id,getNoteObj()))
-        }
-        if(type == types.TASK) {
-            dispatch(PutTasks(id, getTasksObj()))
-        }
-        setModalColorOpen(false);
-        setwidth(305);
-        setTimeout(() => {
-            setOpen(false)
-
-        }, 500)
-    }
-
-    const openNote = () => {
-        setOpen(true)
-        setwidth(WIDTH__NOTE_OPEN)
-    }
+    const placeholder =  'Текст заметки'; 
 
     const dispatch = useDispatch<any>()
 
     const deleteNote = () => {
-        if(type == types.NOTE) {
-
-            dispatch(deleteNotes(id))
+        if(note.type == types.NOTE) {
+            dispatch(deleteNotes(note.id))
         }
-        if(type == types.TASK) {
-
-            dispatch(deleteTasks(id))
+        if(note.type == types.TASK) {
+            dispatch(deleteTasks(note.id))
         }
     }
 
     const hadnletCheckedNote = () => {
         setChecked(!checked)
     }
+    
+    const openNote = () => {
+        if(note.type === types.NOTE) {
+            setCurrentNote(getCurrentNoteText())
+        }
+        if(note.type == types.TASK) {
+            setCurrentNote(getCurrentNoteTasks())
+        }
+    }
 
-    const currentId = (type === types.TASK) ? `tasks${id}` : id; 
+    const getCurrentNoteText = ():INote => {
+            return {
+                id: note.id,
+                title: note.title,
+                text: note.text ? note.text : '',
+                time: note.time,
+                type: note.type,
+                color: currentColor,
+                fixed: currentFixed,
+                images: note.images 
+            }
+    }
+
+    const getCurrentNoteTasks = ():ITaskNote => {
+        return {
+            id: `tasks${note.id}`,
+            tasks: note.tasks, 
+            title: note.title,
+            time:note.time,
+            type:note.type,
+            color: currentColor,
+            fixed:currentFixed,
+            images: note.images 
+        }
+    }
+    
     useEffect(() => {
+        const currentId = note.type === types.TASK ? 'tasks' + note.id: note.id;
         if(checked){
             setCheckedNotes(
                 (checkedNotes.length > 0) ? [...checkedNotes, currentId] : [currentId]
@@ -157,75 +119,84 @@ const Note:FC<IProps> = ({
                 checkedNotes.filter((noteId: string) => noteId !== currentId)
             )
         }     
-
     }, [checked])
 
     useEffect(() => {
         if(checkedNotes.length == 0) {
-            setChecked(false)
+            setChecked(false);
         }
     }, [checkedNotes])
 
     useEffect(() => {
-        setCurrentColor(color)
-    }, [color])
+        setCurrentColor(note.color);
+    }, [note.color])
+    
+    useEffect(() => { 
+        setCurrentTitle(note.title)
+    }, [note.title])
+
+    useEffect(() => {
+        if(note.type === types.NOTE) {
+            changeContent(getCurrentNoteText())
+            dispatch(PutNotes(note.id, getCurrentNoteText()))
+        }
+        if(note.type === types.TASK) {
+            changeContent(getCurrentNoteTasks())
+            dispatch(PutTasks(note.id, getCurrentNoteTasks()))
+        }
+        
+    }, [currentFixed])
+        
+
     return (
-        <div className={`note ${open ? 'active' : ''} ${checked ?  'checked' : ''}`} style={{width:`${WIDTH__NOTE}px`}}> 
+        <div id={note.type === types.TASK ? `tasks${note.id}` : note.id} className={`note ${checked ?  'checked' : ''}`} style={{width:`${WIDTH__NOTE}px`}}> 
             
             <button
                 onClick={hadnletCheckedNote} 
-                className={`note__btn-check ${open ? 'active' : ''}`}>
+                className={`note__btn-check `}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"/>
                 </svg>
             </button>
 
+            <FixedIcon defaultFixed={note.fixed} getValue={setCurrentFixed} classes={['note__fixed-icon']}/>
+
             <button
-                onClick={(checkedNotes.length > 0) ? hadnletCheckedNote : openNote}
+                onClick={(checkedNotes.length > 0) ? hadnletCheckedNote : openNote} 
                 className="note__mask"
-            >
-            </button>
-            {open ? 
-                <button
-                    onClick={closeNote} 
-                    className='note__open-mask anim-opacity'
-                ></button> : null}
+            ></button>
+            
             <div className="note__wrapper" style={{backgroundColor: currentColor, width:`${width}px`}}>
-                
                 
                 <ImagesBlock setImages={setImagesValues} images={imagesValues} />
                 
                 <div className="note__header">
-                    <input className='note__title' type="text" onChange={(e) => changeHandler(e)} defaultValue={currentTitle} name='title'/>
+                    <input className='note__title' type="text" value={currentTitle} name='title'/>
                 </div>
                 <div className="note__body">
                     {
                         
-                        (type === types.NOTE) ? (
+                        (note.type === types.NOTE) ? (
                             <Textarea
                                 classes={["note__textarea"]}
                                 placeholder={placeholder}
-                                valueDef={text} 
+                                valueDef={note.text} 
                                 setReset={setReset}
                                 reset={reset}
-                                getValue={getValue}
+                                getValue={(value) => {}}
                             />
                         ) : (
-                            tasksValue.map((task) => {
+                            note.tasks.map((task: ITask) => {
                                 return <Task 
-                                    id={task.id} 
                                     key={task.id} 
+                                    id={task.id} 
                                     value={task.value} 
                                     checked={task.checked} 
-                                    handlerCheck={changeCheckedHandler}
+                                    handlerCheck={(checked: boolean) => {}} 
                                 />
                             })
                         )
                     }
-
-                    {/* <textarea name="text" >
-                        {text}
-                    </textarea> */}
                 </div>
                 <div className="note__footer">
                     <div>
@@ -244,11 +215,7 @@ const Note:FC<IProps> = ({
                         </button>
                     </div>
                     <div>
-                        <button
-                            onClick={closeNote}
-                            className='note__close'
-
-                        >Закрыть</button>
+                        
                     </div>
                 </div>
                 {

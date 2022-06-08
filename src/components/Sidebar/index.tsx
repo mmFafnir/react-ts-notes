@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 
 import './Sidebar.scss'
@@ -11,7 +11,12 @@ interface ISidebarLink {
     active?: boolean;
     fnc?: () => void;
 }
-const Sidebar = () => {
+
+interface IProps {
+    open: boolean
+}
+
+const Sidebar:FC<IProps> = ({open}) => {
 
     const [sidebarNav, setSidebarNav] = useState<ISidebarLink[]>([
         {
@@ -55,15 +60,16 @@ const Sidebar = () => {
         )
     }
     return (
-        <div className='sidebar'> 
+        <div className={`sidebar ${open ? 'open' : ''}`}> 
             <div className="sidebar__wrapper">
                 <nav className='sidebar__nav'>
                     {
                         sidebarNav.map(link => (
                             <a 
+                                key={link.title}
                                 href="#"
                                 onClick={() => changeActiveLink(link.title)}
-                                className={link.active ? 'sidebar__link active-link' : 'sidebar__link'}>
+                                className={`sidebar__link ${link.active ? 'active-link' : ''}`}>
                                     {link.svg}
                                     <span>{link.title}</span>
                             </a>  

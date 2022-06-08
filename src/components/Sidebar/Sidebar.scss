@@ -2,17 +2,20 @@
 
 .sidebar{
     height: 100%;
-    flex: 0 1 477px;
+    flex: 0 0 277px;
     position: relative;
-    padding-top: 63px;
+    padding-top: 23px;
+    transition-duration: 0.3s;
     &__wrapper{
         width: 100%;
-        top: 63px;
+        top: 23px;
         position: sticky;
+        overflow: hidden;
     }
     &__nav{
         width: 100%;
         height: 100%;
+        transition-duration: 0.3s;
     }
     &__link{
         display: flex;
@@ -26,14 +29,33 @@
         transition-duration: 0.2s;
         
         svg{
+            flex: 0 0 25px;
             margin-right: 5px;
-            fill: #202124
+            fill: #202124;
+
+        }
+        span{
+            white-space: nowrap; 
+            overflow: hidden;
         }
 
         &:hover{
             background-color: rgba(9, 9, 9, 0.208);
         }
         
+    }
+
+    &.open{
+        flex: 0 0 66px;
+        // padding: 0px 4px;
+        .sidebar__nav{
+            width: 29%;
+        }
+        .sidebar__link{
+            margin: 0px 5px;
+            border-radius: 50%;
+            
+        }
     }
 }
 .active-link{

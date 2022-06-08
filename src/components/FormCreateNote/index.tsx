@@ -9,10 +9,10 @@ import { ITask } from '../../types/task';
 import ActionNote from '../ActionNote';
 import ImagesBlock from '../ImagesBlock';
 import ModalColor from '../ModalColor';
-import TaskCreate from '../TaskCreate';
+import FormCreateTasks from '../FormCreateTasks';
 import { Textarea } from '../UI/Textarea';
 
-import './CreateNote.scss'
+import './formCreateNote.scss'
 
 
 export const types = {
@@ -22,7 +22,7 @@ export const types = {
 
 const STATE_COLOR = '#fff'
 
-const CreateNote = () => {
+const FormCreateNote = () => {
 
     const dispatch = useDispatch()
 
@@ -52,11 +52,14 @@ const CreateNote = () => {
     const closeCreateNotes = () => {
         if(type == types.NOTE) {
             createNotes();
+            setValue('')
         } 
         
         if(type == types.TASK) {
             createTasks()  
+            setTasks([])
         }
+        setTitle('')
         setColor(STATE_COLOR);
         setType(types.NOTE);
         setModalOpen(false)
@@ -80,12 +83,13 @@ const CreateNote = () => {
 
         dispatch<any>(postNotes({
             id: String(Date.now()),
-            time: getDate(),
+            time: Date.now(),
             title: title,
             text: value,
             color: color,
             images: images,
             type: types.NOTE,
+            fixed: false,
             
         }))
 
@@ -97,16 +101,15 @@ const CreateNote = () => {
         if(title.length == 0 && tasks.length == 0) return
         dispatch<any>(postTasks({
             id: String(Date.now()),
-            time: getDate(),
+            time: Date.now(),
             title: title,
             tasks: tasks,
             color: color, 
             images: images,
             type: types.TASK,
+            fixed: false,
         }))
-
     }
-    
     
     return (
         <div className='create-note' style={{backgroundColor:color}}>
@@ -152,7 +155,7 @@ const CreateNote = () => {
                                         getValue={getValue}
                                     />
                                 ) : (
-                                    <TaskCreate getTasks={setTasks} />
+                                    <FormCreateTasks getTasks={setTasks} />
                                 )
                             }
                             </div>
@@ -179,4 +182,4 @@ const CreateNote = () => {
     );
 };
 
-export default CreateNote;
+export default FormCreateNote;

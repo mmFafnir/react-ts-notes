@@ -13,8 +13,12 @@
             display: flex;
         }
     }
-
+    .search{
+        margin-left: 20px;
+    }
     &__right{
-
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
     }
 }

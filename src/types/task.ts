@@ -6,10 +6,12 @@ export default interface ITaskNote {
     title: string;
     tasks:ITask[];
     time: string|number;
-    color?: string;
+    color: string;
     change?: string|number;
-    images?: IImg[];
-    type: string
+    images: IImg[];
+    fixed: boolean
+    type: string;
+    [key: string]: any;
      
 }
 

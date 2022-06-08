@@ -1,0 +1,13 @@
+.notes__body{
+    height: 100%;
+    display: flex;
+    padding: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    > div{
+      width:  100%;
+    
+    }
+}
