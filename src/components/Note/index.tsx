@@ -97,7 +97,7 @@ const Note:FC<IProps> = ({
 
     const getCurrentNoteTasks = ():ITaskNote => {
         return {
-            id: `tasks${note.id}`,
+            id: note.id,
             tasks: note.tasks, 
             title: note.title,
             time:note.time,
@@ -109,14 +109,13 @@ const Note:FC<IProps> = ({
     }
     
     useEffect(() => {
-        const currentId = note.type === types.TASK ? 'tasks' + note.id: note.id;
         if(checked){
             setCheckedNotes(
-                (checkedNotes.length > 0) ? [...checkedNotes, currentId] : [currentId]
+                (checkedNotes.length > 0) ? [...checkedNotes, note.id] : [note.id]
             )
         }else{
             setCheckedNotes(
-                checkedNotes.filter((noteId: string) => noteId !== currentId)
+                checkedNotes.filter((noteId: string) => noteId !== note.id)
             )
         }     
     }, [checked])
@@ -149,7 +148,7 @@ const Note:FC<IProps> = ({
         
 
     return (
-        <div id={note.type === types.TASK ? `tasks${note.id}` : note.id} className={`note ${checked ?  'checked' : ''}`} style={{width:`${WIDTH__NOTE}px`}}> 
+        <div id={note.id} className={`note ${checked ?  'checked' : ''}`} style={{width:`${WIDTH__NOTE}px`}}> 
             
             <button
                 onClick={hadnletCheckedNote} 

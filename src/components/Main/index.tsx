@@ -33,6 +33,7 @@ const Main:FC<IProps> = ({
 
     const [currentNote, setCurrentNote] = useState<(ITaskNote|INote)|null>(null);
     const [grid, setGrid] = useState<any>(null);
+    const [fixed, setFixed] = useState<number>(0)
 
     const contentChange = (note: INote|ITaskNote) => {
         dispatch({
@@ -46,9 +47,9 @@ const Main:FC<IProps> = ({
             payload: id
         })
         if(type === types.NOTE){
-            dispatch(deleteNotes(id))
+            dispatch(deleteNotes(id));
         }else if(type == types.TASK){
-            dispatch(deleteTasks(id.replace(/tasks/ig,'')))
+            dispatch(deleteTasks(id));
         } 
     }
 
@@ -58,7 +59,7 @@ const Main:FC<IProps> = ({
         
         const arrFixed = content ? content.data.filter((item) => item.fixed): [];
         const noArrFixed = content ? content.data.filter((item) => !item.fixed) : [];
-        
+        // setFixed(arrFixed.length)
         return [ ...arrFixed, ...noArrFixed.sort((a, b) => Number(a.time) - Number(b.time)).reverse()]
     
     }
@@ -70,29 +71,36 @@ const Main:FC<IProps> = ({
                 <StackGrid gridRef={(grid) => setGrid(grid)} gutterWidth={20} gutterHeight={20} columnWidth={WIDTH__NOTE}>
                     {
                         sortContent().map((item, index) => {
+                            
                             switch (item.type) {
                                 case types.NOTE:
                                     return (
-                                        <Note   
-                                        key={item.id}
-                                        note={item}
-                                        setCheckedNotes={(note) => setCheckedNotes(note)}
-                                        checkedNotes={checkedNotes}
-                                        setCurrentNote={setCurrentNote}
-                                        changeContent={contentChange}
-                                        />
+                                        <>
+                                            {/* {index === 1 && fixed > 0? <h2>Закрепленные</h2> : null}  */}
+                                            <Note   
+                                            key={item.id}
+                                            note={item}
+                                            setCheckedNotes={(note) => setCheckedNotes(note)}
+                                            checkedNotes={checkedNotes}
+                                            setCurrentNote={setCurrentNote}
+                                            changeContent={contentChange}
+                                            />
+                                        </>
                                     );
                                 
                                 case types.TASK:
                                     return (
-                                        <Note 
-                                        key={'tasks' + item.id}
-                                        note={item}
-                                        setCheckedNotes={(note) => setCheckedNotes(note)}
-                                        checkedNotes={checkedNotes}
-                                        setCurrentNote={setCurrentNote}
-                                        changeContent={contentChange}
-                                        />
+                                        <>                                        
+                                            {/* {index === 1 && fixed > 0? <h2>Закрепленные</h2> : null} */}
+                                            <Note 
+                                            key={'tasks' + item.id}
+                                            note={item}
+                                            setCheckedNotes={(note) => setCheckedNotes(note)}
+                                            checkedNotes={checkedNotes}
+                                            setCurrentNote={setCurrentNote}
+                                            changeContent={contentChange}
+                                            />
+                                        </>
 
                                     )
                                 default:

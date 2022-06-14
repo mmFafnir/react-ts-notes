@@ -35,14 +35,8 @@ const Board:FC<IProps>= ({
 
     const getCurrentContent = () => {
         var clonedArr = JSON.parse(JSON.stringify(content.data));
-        const currentContent = clonedArr.map((note:any) => {
-            if(note.type == types.TASK){
-                note.id = `tasks${note.id}`;
-                return note
-            }
-            return note
-        }) 
-        return currentContent
+
+        return clonedArr
     }
     
     const changeColor = () => {
@@ -55,7 +49,7 @@ const Board:FC<IProps>= ({
                 dispatch(PutNotes(id, note))
                 
             } else if(note.type === types.TASK){
-                dispatch(PutTasks(id.replace(/tasks/ig,''), note))
+                dispatch(PutTasks(id, note))
             }
         })
     }
@@ -77,7 +71,7 @@ const Board:FC<IProps>= ({
                 dispatch(PutNotes(note.id, note))
                 
             } else if(note.type === types.TASK){
-                dispatch(PutTasks(note.id.replace(/tasks/ig,''), note))
+                dispatch(PutTasks(note.id, note))
                 // dispatch(deleteTasks(id.replace("tasks", '')))
             }
         })
@@ -91,7 +85,7 @@ const Board:FC<IProps>= ({
                 dispatch(deleteNotes(id))
                 
             } else if(note.type === types.TASK){
-                dispatch(deleteTasks(id.replace("tasks", '')))
+                dispatch(deleteTasks(id))
             }
         })
         closeBoard()

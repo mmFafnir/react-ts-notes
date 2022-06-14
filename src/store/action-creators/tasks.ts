@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { AnyAction, Dispatch } from 'redux'
 import { ThunkDispatch } from 'redux-thunk';
+import { getStorage, setStorage } from '../../script/localStorage';
 import ITaskNote from '../../types/task';
 import { TasksDeleteActionType } from '../reducer/TaskReducer/deleteInteface';
 import { TasksGetAction, TasksGetActionType } from '../reducer/TaskReducer/getInteface';
@@ -15,11 +16,12 @@ export const fetchTasks = () => {
     return async (dispatch: any) => {
         try {
             dispatch({type: TasksGetActionType.FETCH__TASKS});
-            const response = await axios.get(`${baseUrl}/tasks`);
-
+            // const response = await axios.get(`${baseUrl}/tasks`);
+            const data = getStorage('tasks') ? getStorage('tasks') : [];
+            console.log(data)
             dispatch({
                 type: TasksGetActionType.FETCH__TASKS_SUCCESS,
-                payload: response.data
+                payload: data
             })
         } catch(e) {
             console.log(e)
@@ -35,11 +37,14 @@ export const postTasks = (task: ITaskNote) => {
     return async (dispatch: any) => {
         try {
             dispatch({type: TasksPostActionType.POST__TASKS});
-            const response = await axios.post(`${baseUrl}/tasks`, task);
+            // const response = await axios.post(`${baseUrl}/tasks`, task);
+
+            const data = getStorage('tasks') ? getStorage('tasks') : [];  
+            setStorage('tasks', [task, ...data])
             
             dispatch({
                 type: TasksPostActionType.POST__TASKS_SUCCESS,
-                payload: response.data
+                payload: task
             })
         } catch(e) {
             dispatch({
@@ -54,8 +59,9 @@ export const deleteTasks = (id:string|number) => {
     return async (dispatch: any) => {
         try {
             dispatch({type: TasksDeleteActionType.DELETE__TASKS});
-            const response = await axios.delete(`${baseUrl}/tasks/${id}`);
-
+            // const response = await axios.delete(`${baseUrl}/tasks/${id}`);
+            const data = getStorage('tasks');
+            setStorage('tasks', data.filter((item:ITaskNote) => item.id !== id));
             
             dispatch({
                 type: TasksDeleteActionType.DELETE__TASKS_SUCCESS,
@@ -76,12 +82,16 @@ export const PutTasks = (id:string|number, task:ITaskNote) => {
     return async (dispatch: any) => {
         try {
             dispatch({type: TasksPutActionType.PUT__TASKS});
-            const response = await axios.put(`${baseUrl}/tasks/${id}`, task);
-            
-            console.log(response)
+            // const response = await axios.put(`${baseUrl}/tasks/${id}`, task);
+            const data = getStorage('tasks');
+            setStorage('tasks', data.map((item:ITaskNote) => {
+                if(item.id == id) return task;
+                return item
+            }))         
+            // console.log(response)
             dispatch({
                 type: TasksPutActionType.PUT__TASKS_SUCCESS,
-                payload: response.data
+                payload: task
             })
         } catch(e) {
             dispatch({
@@ -91,3 +101,4 @@ export const PutTasks = (id:string|number, task:ITaskNote) => {
         }
     }
 }
+
