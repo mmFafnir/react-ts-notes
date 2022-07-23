@@ -38,13 +38,13 @@
             height: 14px;
         }
     }
-
+    
     &__item{
         display: flex;
         align-items: center;
         padding: 5px 0px;
         padding-left: 12px;
-        width: 100%;
+        width: 100% !important;
         border-radius: 0px !important;
         &:hover{
             background-color: rgba(0, 0, 0, 0.163);
@@ -79,8 +79,8 @@
     
 }
 .label-create{
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     padding: 12px;
     display: flex;
     align-items: flex-start;

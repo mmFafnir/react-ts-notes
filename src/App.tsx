@@ -44,10 +44,8 @@ function App() {
 
   const sidebarOpen = useTypeSelector(state => state.sidebarOpen);
   
+  const listStyle = useTypeSelector(state => state.listStyle);
 
-  const [checkedNotes, setCheckedNotes] = useState<string[]>([]);
-
-  
   const [modalLabel, setModalLabel] = useState<boolean>(false);
   
   useEffect(() => {
@@ -56,6 +54,16 @@ function App() {
       payload: {tasks: tasks.data, notes: notes.data}
     })
   }, [notes.data, tasks.data])
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('work')
+      dispatch({
+        type: ContentActionType.INITIAL_CONTENT,
+        payload: {tasks: tasks.data, notes: notes.data}
+      })
+    }, 500)
+  },[listStyle])
 
   useEffect(() => {
     dispatch(fetchNotes());
