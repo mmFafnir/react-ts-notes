@@ -12,6 +12,7 @@
             padding: 9px;
             transition-duration: 0.3s;
             margin-right: 5px;
+            cursor: pointer;
             input{
                 display: none;
             }
@@ -23,6 +24,9 @@
             &:hover{
                 background-color: rgba(0, 0, 0, 0.138);
             }
+        }
+        .archive{
+            padding: 6px;
         }
     }
 }

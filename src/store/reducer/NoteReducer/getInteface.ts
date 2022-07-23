@@ -5,7 +5,11 @@ import { NotesState } from "./type";
 export enum NotesGetActionType {
     FETCH__NOTES = 'FETCH__NOTES',
     FETCH__NOTES_SUCCESS = 'FETCH__NOTES_SUCCESS',
-    FETCH__NOTES_ERROR = 'FETCH__NOTES_ERROR'
+    FETCH__NOTES_ERROR = 'FETCH__NOTES_ERROR',
+
+    FETCH_TRASH__NOTES = 'FETCH_TRASH__NOTES',
+    FETCH_TRASH__NOTES_SUCCESS = 'FETCH_TRASH__NOTES_SUCCESS',
+    FETCH_TRASH__NOTES_ERROR = 'FETCH_TRASH__NOTES_ERROR',
 }
 
 
@@ -26,6 +30,23 @@ interface FetchNotesErrorActions {
     payload: null|string
 }
 
+interface FetchTrashNotesActions {
+    type: NotesGetActionType.FETCH_TRASH__NOTES;
 
-export type NotesGetAction = FetchNotesActions | FetchNotesSuccessActions | FetchNotesErrorActions;
+}
+
+
+interface FetchTrashNotesSuccessActions {
+    type: NotesGetActionType.FETCH_TRASH__NOTES_SUCCESS;
+    payload: INote[]
+
+}
+
+interface FetchTrashNotesErrorActions {
+    type: NotesGetActionType.FETCH_TRASH__NOTES_ERROR;
+    payload: null|string
+}
+
+export type NotesGetAction = FetchNotesActions | FetchNotesSuccessActions | FetchNotesErrorActions | 
+FetchTrashNotesActions | FetchTrashNotesSuccessActions | FetchTrashNotesErrorActions;
 

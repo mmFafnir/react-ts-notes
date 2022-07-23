@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useRef, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import './style.scss'
 
@@ -13,11 +14,20 @@ const Search: FC<ISearchProps> = ({
 
     const [value, setValue] = useState<string|undefined>('');
     
-     const changeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const changeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-     }
+            if(e.target.value.length == 0){
+            navigate('/')
+        }
+        if(e.target.value !== '') {navigate({pathname:'/search', search: `?=${e.target.value}`})}
+    }
     const clearInput = ():void => {
+        
         setValue('');
+        navigate(location.pathname);
     }
     
 
@@ -42,4 +52,4 @@ const Search: FC<ISearchProps> = ({
     );
 };
 
-export default Search;
+export default React.memo(Search);

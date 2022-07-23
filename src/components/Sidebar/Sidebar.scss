@@ -2,15 +2,22 @@
 
 .sidebar{
     height: 100%;
-    flex: 0 0 277px;
-    position: relative;
-    padding-top: 23px;
+    width:  277px;
+    z-index: 150;
+    background-color: #fff;
+    position: fixed;
+    overflow: hidden;
+    left: 0px;
+    top: 69px;
+    // paddin/g-top: 23px;
     transition-duration: 0.3s;
+
     &__wrapper{
         width: 100%;
-        top: 23px;
-        position: sticky;
-        overflow: hidden;
+        padding-top: 10px;
+        // top: 23px;
+        // position: sticky;
+        overflow: visible;
     }
     &__nav{
         width: 100%;
@@ -18,12 +25,14 @@
         transition-duration: 0.3s;
     }
     &__link{
+        cursor: pointer;
         display: flex;
         color: #202124;
         align-items: center;
         border-radius: 0 25px 25px 0;
         overflow: hidden;
         padding: 20px 20px;
+        margin-right: 15px;
         font-size: 20px;
         border: 1px solid transparent;
         transition-duration: 0.2s;
@@ -32,6 +41,8 @@
             flex: 0 0 25px;
             margin-right: 5px;
             fill: #202124;
+            width: 25px;
+            height: 25px;
 
         }
         span{
@@ -44,15 +55,17 @@
         }
         
     }
-
+    
     &.open{
-        flex: 0 0 66px;
+        width: 87px;
         // padding: 0px 4px;
         .sidebar__nav{
-            width: 29%;
+            // width: 100%;
         }
+        
         .sidebar__link{
             margin: 0px 5px;
+            margin-right: 15px;
             border-radius: 50%;
             
         }
@@ -63,4 +76,43 @@
     &:hover{
         background-color: #feefc3;
     }
+    
+}
+
+@media (max-width: 1119px) {
+    .sidebar{
+        position: fixed;
+        // width: 87px;
+        box-shadow: 0px 1px 5px #000;
+        &.open{
+            box-shadow: none;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar{
+        z-index: 149;
+        top: 50px;
+        left: 0%;
+        transition-duration: 1s;
+        &.open{
+            left: -100%;
+            // width: 50px;
+
+            .sidebar__link{
+                margin-right: 0;
+            }
+        }
+        &__link{
+            padding:  10px 13px;
+
+            svg{
+                flex-basis: 20px;
+            }
+            span{
+                font-size: 15px;
+            }
+        }
+    }   
 }

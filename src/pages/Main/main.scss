@@ -1,0 +1,23 @@
+.notes__body{
+    height: 100%;
+    display: flex;
+    padding: 40px 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: start;
+
+    h2{
+      margin-bottom: 20px;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+    > div{
+      width:  100%;
+    
+    }
+    .empty{
+      height: 0px !important;
+      width: 0px;
+    }
+}

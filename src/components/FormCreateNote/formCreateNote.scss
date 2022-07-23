@@ -12,6 +12,10 @@
     &__header{
         width: 100%;
         display: flex;
+        position: relative;
+        .fixed-icon{
+            right: 0px;
+        }
         // border-bottom: 1px solid rgba(0, 0, 0, 0.353);
     }
 
@@ -69,6 +73,7 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        position: relative;
     }
     &__close{
         flex: 0 0 105px;
@@ -85,4 +90,16 @@
         }
     }
     
+}
+@media (max-width: 600px) {
+    .create-note {
+        &__title{
+            input{
+                font-size: 18px;
+            }
+        }
+        &__textarea{
+            font-size: 16px;
+        }
+    }
 }

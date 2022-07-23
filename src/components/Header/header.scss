@@ -1,6 +1,14 @@
 
 
 .header{
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width: 100%;
+    z-index: 150;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+
     &__wrapper{
         padding: 10px 20px;
         display: flex;
@@ -11,7 +19,15 @@
         flex: 0 1 1000px;
         > div{
             display: flex;
+
+            &:first-child{
+                flex: 1 1 100px;
+                align-items: center;
+            }
         }
+    }
+    .burger-icon{
+        flex: 0 0 44px
     }
     .search{
         margin-left: 20px;
@@ -20,5 +36,80 @@
         display: flex;
         align-items: center;
         margin-left: 20px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .header{
+        height: 50px;
+        
+        &__wrapper{
+            align-items: center;
+            padding: 5px 10px;
+            height: 100%;
+        }
+
+        &__left > div:first-child{
+            margin-right: 10px !important;
+        }
+        &__right{
+            display: none;
+        }
+        
+        .search{
+            margin-left: 10px;
+        }
+        .burger-icon{
+            flex-basis: 32px;
+            height: 32px;
+        }
+    }
+    .logo{
+        &__img{
+            flex-basis: 25px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        &__text{
+            font-size: 14px;
+            margin-left: 3px;
+        }
+    }
+
+    .search{
+        height: 34px;
+        &__icon{
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            left: 5px;
+            top:49%;
+
+            svg{
+                width: 100%;
+                height: 100%;
+            }
+
+            
+        }
+        input{
+            font-size: 12px;
+            padding: 0px 23px;
+        }
+        &__close{
+            top:49%;
+            width: 16px;
+            height: 16px;
+            padding: 0px;
+            right: 5px;
+            svg{
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
 }

@@ -2,7 +2,30 @@
     height: 100%;
 }
 .App__wrapper{
-    height: 100%;
+    // height: 100%;
     display: flex;
-    
+    padding: 91px 0px 0px 280px;
+    transition-duration: 0.5s;
+    justify-content: center;
+    // &.mob{
+    //     padding-left: 80px;
+    // }
+}
+
+.mobile {
+    .burger-icon:hover{
+        background-color: transparent;
+    }   
+}
+
+@media (max-width:1110px) {
+    .App__wrapper{
+        padding-left: 94px;
+        padding-right: 10px;
+    }
+}
+@media (max-width : 600px) {
+    .App__wrapper{
+        padding-left: 10px;
+    }
 }

@@ -54,7 +54,7 @@ export const Textarea:React.FC <TextareaProps> = ({
   ) 
 };
 
-export default Textarea
+export default React.memo(Textarea)
 
 
 

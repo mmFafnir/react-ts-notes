@@ -11,6 +11,7 @@ export default interface ITaskNote {
     images: IImg[];
     fixed: boolean
     type: string;
+    archive: boolean;
     [key: string]: any;
      
 }

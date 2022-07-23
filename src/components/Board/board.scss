@@ -4,7 +4,7 @@
     padding: 0px 20px;
     position: fixed;
     background-color: #fff;
-    z-index: 20;
+    z-index: 151;
     top: -100%;
     left: 0px;
     transition-duration: 0.5s;
@@ -68,6 +68,51 @@
             &:hover{
                 background-color: rgba(0, 0, 0, 0.138);
 
+            }
+        }
+    }
+
+    .modal-color{
+        right: 20px;
+    }
+
+    .trash-actions{
+        .arrow,.x {
+            width: 10px;
+            height: 10px;
+            left: 17px;
+            top: 20px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .board{
+        height: 50px;
+        padding: 0 10px;
+
+
+        &__close{
+            width: 30px;
+            height: 30px;
+            padding: 5px
+        }
+        &__title{
+            font-size: 15px;
+        }
+
+        &__btns{
+            button{
+                width: 25px;
+                height: 25px;
+                padding: 5px;
+                margin-right: 10px;
+                &:last-child{
+                    padding: 1px !important;
+                }
+                &:hover{
+                    background-color: transparent;
+                }
             }
         }
     }

@@ -1,16 +1,23 @@
 
-import React, { ChangeEvent, useState, useSyncExternalStore } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import getDate from '../../script/getDate';
+
 import { postNotes } from '../../store/action-creators/notes';
 import { postTasks } from '../../store/action-creators/tasks';
+
 import IImg from '../../types/img';
 import { ITask } from '../../types/task';
+
 import ActionNote from '../ActionNote';
 import ImagesBlock from '../ImagesBlock';
 import ModalColor from '../ModalColor';
 import FormCreateTasks from '../FormCreateTasks';
+import FormEditingLabel from '../FormEditingLabel';
+import LabelsBlock from '../LabelsBlock';
+
 import { Textarea } from '../UI/Textarea';
+import FixedIcon from '../UI/FixedIcon';
+import Scrollbar from '../UI/Scrollbar';
 
 import './formCreateNote.scss'
 
@@ -23,9 +30,11 @@ export const types = {
 const STATE_COLOR = '#fff'
 
 const FormCreateNote = () => {
-
-    const dispatch = useDispatch()
-
+    
+    
+    const dispatch = useDispatch<any>();
+    
+    const [id, setId] = useState<string>('')
     const [title, setTitle] = useState<string>('');
     
     const [value, setValue] = useState<string>('');
@@ -38,12 +47,13 @@ const FormCreateNote = () => {
 
     const [open, setOpen] = useState<boolean>(false);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [modalLabels, setModalLabels] = useState<boolean>(false);
 
     const [type, setType] = useState<string>(types.NOTE);
-
     const [color, setColor] = useState<string>(STATE_COLOR);
-
-    const [images, setImages] = useState<IImg[]>([])
+    const [fixed, setFixed] = useState<boolean>(false);
+    const [archive, setArchive] = useState<boolean>(false);
+    const [images, setImages] = useState<IImg[]>([]);
 
     const changeTitle = (e:ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -64,11 +74,11 @@ const FormCreateNote = () => {
         setType(types.NOTE);
         setModalOpen(false)
         setOpen(false);
-        setImages([])
+        setImages([]);
     }  
 
     const getValue = (value: string) => {
-        if(value == '\n'){
+        if(value === '\n'){
             setDisabled(true);
             setValueLenght(0)   
             return
@@ -79,18 +89,17 @@ const FormCreateNote = () => {
     }
     
     const createNotes = () => {
-        if(title.length == 0 && value.length == 0) return
-
-        dispatch<any>(postNotes({
-            id: String(Date.now()),
+        if(title.length === 0 && value.length === 0 && images.length === 0) return
+        dispatch(postNotes({
+            id: id,
             time: Date.now(),
             title: title,
             text: value,
             color: color,
             images: images,
             type: types.NOTE,
-            fixed: false,
-            
+            fixed: fixed,
+            archive:archive,
         }))
 
         setTitle('');
@@ -99,20 +108,26 @@ const FormCreateNote = () => {
     
     const createTasks = () => {
         if(title.length == 0 && tasks.length == 0) return
-        dispatch<any>(postTasks({
-            id: String(Date.now()),
+        dispatch(postTasks({
+            id: id,
             time: Date.now(),
             title: title,
             tasks: tasks,
             color: color, 
             images: images,
             type: types.TASK,
-            fixed: false,
+            fixed: fixed,
+            archive: archive,
         }))
     }
+
+    useEffect(() => {
+        setId(String(Date.now()))
+    }, [open])
     
     return (
         <div className='create-note' style={{backgroundColor:color}}>
+            
             <div className="create-note__wrapper">
                 <ImagesBlock 
                     setImages={setImages} 
@@ -120,6 +135,9 @@ const FormCreateNote = () => {
                 />
                 <div className="create-note__header" 
                     onClick={() => setOpen(true)}>
+                        {
+                            open ? <FixedIcon defaultFixed={false} getValue={setFixed} /> : null 
+                        }
 
                     <div className="create-note__title">
                         <input
@@ -145,41 +163,59 @@ const FormCreateNote = () => {
                     open ? (
                         <>
                         <div className="create-note__body">
-                            {
-                                type === types.NOTE ? (
-                                    <Textarea 
-                                        placeholder='Заметки'
-                                        classes={['create-note__textarea']}
-                                        setReset={setReset}
-                                        reset={reset}
-                                        getValue={getValue}
-                                    />
-                                ) : (
-                                    <FormCreateTasks getTasks={setTasks} />
-                                )
-                            }
-                            </div>
+                            <Scrollbar maxHeight={'500px'}>
+                                {
+                                    type === types.NOTE ? (
+                                        <Textarea 
+                                            placeholder='Заметки'
+                                            classes={['create-note__textarea']}
+                                            setReset={setReset}
+                                            reset={reset}
+                                            getValue={getValue}
+                                        />
+                                    ) : (
+                                        <FormCreateTasks getTasks={setTasks} />
+                                    )
+                                }
+                            </Scrollbar>
+                            {<LabelsBlock noteId={id} />}
+                            
+                        </div>
                         <div className="create-note__footer">
                             <ActionNote 
                                 setModalColorOpen={setModalOpen}
                                 modalColorOpen={modalOpen}
                                 images={images}
+                                archive={archive}
                                 setImages={setImages}
+                                setArchive={setArchive}
+                                setModalLabels={setModalLabels}
                             />
                             <button
                                 onClick={() => closeCreateNotes()} 
                                 className="create-note__close"
-                            >Закрыть</button>
+                            > 
+                                Закрыть
+                            </button>
+                            {
+                                modalLabels ? (
+                                     <FormEditingLabel
+                                        noteId={id}
+                                        closeModal={() => setModalLabels(false)} 
+                                    />
+                                ) : ''
+                            }
+                            
                         </div>
                         </>
                     ) : null
                 }
             </div>
             {
-                modalOpen ? <ModalColor  getColor={setColor}/> : null
+                modalOpen ? <ModalColor closeModal={setModalOpen} getColor={setColor}/> : null
             }
         </div>
     );
 };
 
-export default FormCreateNote;
+export default React.memo(FormCreateNote);

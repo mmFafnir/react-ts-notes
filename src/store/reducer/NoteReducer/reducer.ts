@@ -26,7 +26,7 @@ export const noteReducer = (state = initialState, action:ActionType):NotesState 
             
         case NotesGetActionType.FETCH__NOTES_ERROR:
             return {loading: false, error: action.payload, data: []}
-            
+        
 
         //Добавить заметку
         case NotesPostActionType.POST__NOTES:
@@ -49,6 +49,16 @@ export const noteReducer = (state = initialState, action:ActionType):NotesState 
         case NotesDeleteActionType.DELETE__NOTES_ERROR:
             return {loading: false, error: action.payload, data: state.data}
             
+        //Восстановление заметок
+        case NotesDeleteActionType.REMOVE__NOTES:
+            return {loading: true, error: null, data: state.data}
+        
+        case NotesDeleteActionType.REMOVE__NOTES_SUCCESS:
+            return {loading: false, error: null, data: [action.payload, ...state.data]}
+        
+        case NotesDeleteActionType.REMOVE__NOTES_ERROR:
+            return {loading: false, error: action.payload, data: state.data}
+        
 
         //Редактирование заметк
         case NotesPutActionType.PUT__NOTES:
@@ -60,7 +70,7 @@ export const noteReducer = (state = initialState, action:ActionType):NotesState 
         case NotesPutActionType.PUT__NOTES_ERROR:
             return {loading: false, error: action.payload, data: state.data}
        
-            
+
         default:
             return state
     }

@@ -1,8 +1,9 @@
+import ITaskNote from "../../../types/task";
 
 export enum TasksDeleteActionType {
     DELETE__TASKS = 'DELETE__TASKS',
     DELETE__TASKS_SUCCESS = 'DELETE__TASKS_SUCCESS',
-    DELETE__TASKS_ERROR = 'DELETE__TASKS_ERROR'
+    DELETE__TASKS_ERROR = 'DELETE__TASKS_ERROR',
 }
 
 
@@ -23,7 +24,6 @@ interface DeleteTasksErrorActions {
 
 
 export type TasksDeleteAction = DeleteTasksActions | DeleteTasksSuccessActions | DeleteTasksErrorActions;
-
 
 
 

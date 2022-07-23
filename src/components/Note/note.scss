@@ -59,6 +59,7 @@
         }
         .note__btn-check{
             opacity: 1;
+        
         }
     }
     &__wrapper{
@@ -72,7 +73,6 @@
         background-color: #fff;
         border: solid 1px #e0e0e0;
     }
-
     &__fixed-icon{
         opacity: 0;
     }
@@ -81,7 +81,7 @@
         position: absolute;
         left: -9px;
         top: -9px;
-        z-index: 20;
+        z-index: 22;
         width: 20px;
         height: 20px;
         border-radius: 50%;
@@ -108,8 +108,15 @@
 
     &__header{
         margin-bottom: 20px;
+        position: relative;
+        .fixed-icon {
+            top: 0px;
+            right: 0px;
+        }
         input{
-            padding-right: 30px;
+            padding-right: 40px;
+            width: 100%;
+            padding-right: 37px;
             font-size: 20px;
         }
     }
@@ -126,7 +133,7 @@
         max-height: 300px;
         padding: 1px 0px;
         overflow: hidden;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.241);
+        // border-bottom: 1px solid rgba(0, 0, 0, 0.241);
         padding-bottom: 10px;
     }
 
@@ -134,6 +141,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        opacity: 0;
+        transition-duration: 0.3s;
         >div{
             display: flex;
             flex: 1 1 auto;
@@ -191,20 +200,43 @@
         height: 30px;
         flex: 0 0 100px;
         opacity: 0;
-        &:hover{
-            // background-color: rgba(0, 0, 0, 0.138);
-        }
+       
     }
 
     
 
     &:hover{
+        .note__wrapper{
+            transition-duration: 0.3s;
+            box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.389);
+        
+        }
         .note__btn-check{
             opacity: 1;
         }
         .note__fixed-icon{
             opacity: 1;
         }
+        .note__footer{
+            opacity: 1;
+        }
     }
 }
 
+
+@media (max-width: 600px) {
+    .note{
+        &__header{
+            margin-bottom: 10px;
+        }
+        &__title{
+            font-size: 18px;
+        }
+        &__body{
+            padding-bottom: 10px;
+        }
+        &__textarea{
+            font-size: 14px;
+        }
+    }
+}

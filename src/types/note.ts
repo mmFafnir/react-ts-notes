@@ -10,6 +10,7 @@ export default interface INote {
     images: IImg[];
     type: string;
     fixed: boolean;
+    archive: boolean;
     [key: string]: any;
 
 

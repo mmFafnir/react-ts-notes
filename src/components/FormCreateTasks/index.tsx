@@ -65,7 +65,6 @@ const FormCreateTasks: FC<IProps> = ({
     }
 
     const handlerDelete = (id: string|number) => {
-        console.log(id)
         setTasks(tasks.filter(task => task.id !== id))
     }
     

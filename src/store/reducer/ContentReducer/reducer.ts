@@ -29,13 +29,7 @@ export const contentReducer = (state = initialState, action: ContentActions) => 
         
         case ContentActionType.DELETE_CONTENT:
             return {
-                data: state.data?.filter(item => {
-                    
-                    // if(item.type === types.TASK && action.payload.replace(/tasks/ig,'') === item.id) {item.id = 'tasks'+item.id;}
-                    // console.log(item.id == action.payload)
-                    
-                    if(item.id !== action.payload) return item   
-                })
+                data: state.data?.filter(item => item.id !== action.payload)   
             };
             
         default:

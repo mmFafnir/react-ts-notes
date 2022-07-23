@@ -1,14 +1,18 @@
 import React from 'react';
-import './style.scss'
+
+import './style.scss';
+
+const logoImg =  require('./logo.png');
+
 
 const Logo = () => {
     return (
         <div className='logo'>
             <div className="logo__img">
-                <img src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png" alt="notes" />
+                <img src={logoImg} alt="notes" />
             </div>
             <div className="logo__text">
-                Notes
+                RNotes
             </div>
         </div>
     );

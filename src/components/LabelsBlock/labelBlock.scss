@@ -1,0 +1,50 @@
+.labels-block{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    > div{
+        max-width: 80px;
+        min-width: 50px;
+        margin: 0px 3px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        padding: 5px 5px;
+        background-color: rgba(69, 65, 65, 0.326);
+        margin-bottom: 4px;
+        &:hover{
+            button{
+                opacity: 1;
+            }
+        }
+    }
+    span {
+        flex: 1 1 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-right: 5px;
+    }
+    button{
+        // padding: 2px;
+        flex: 0 0 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        border-radius: 50%;
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.252);
+        }
+    }
+    svg{
+        width: 10px;
+        height: 10px;
+
+    }
+    
+}

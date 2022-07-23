@@ -4,17 +4,19 @@ import { AnyAction, Dispatch } from 'redux'
 import { ThunkDispatch } from 'redux-thunk';
 import { getStorage, setStorage } from '../../script/localStorage';
 import INote from '../../types/note';
+import { ContentActionType } from '../reducer/ContentReducer/contentInterface';
+import { ILabel } from '../reducer/LabelReducer/type';
 import { NotesDeleteActionType } from '../reducer/NoteReducer/deleteInteface';
 import { NotesGetAction, NotesGetActionType } from '../reducer/NoteReducer/getInteface';
 import { NotesPostActionType } from '../reducer/NoteReducer/postInterface';
 import { NotesPutActionType } from '../reducer/NoteReducer/putInterface';
+import { PostTrashNotes } from './trash';
 
 export const fetchNotes = () => {
     return async (dispatch: any) => {
         try {
             dispatch({type: NotesGetActionType.FETCH__NOTES});
-            
-            
+
             // const response = await axios.get('https://619d484e131c600017088e7d.mockapi.io/notes');
             const response = getStorage('notes') ? getStorage('notes') : [];
             
@@ -31,6 +33,7 @@ export const fetchNotes = () => {
         }
     }
 }
+
 
 export const postNotes = (note: INote) => {
     return async (dispatch: any) => {
@@ -57,9 +60,12 @@ export const deleteNotes = (id:string|number) => {
         try {
             dispatch({type: NotesDeleteActionType.DELETE__NOTES});
             // const response = await axios.delete(`https://619d484e131c600017088e7d.mockapi.io/notes/${id}`);
+
             const oldData = getStorage('notes');
+            dispatch(PostTrashNotes(
+                oldData.filter((item: INote) => item.id === id)[0]
+            ))
             setStorage('notes', oldData.filter((item: INote) => item.id !== id));
-            
             dispatch({
                 type: NotesDeleteActionType.DELETE__NOTES_SUCCESS,
                 payload: id
@@ -74,8 +80,31 @@ export const deleteNotes = (id:string|number) => {
     }
 }
 
+export const removeDeleteNotes = (deletedNote: INote) => {
+    return async (dispatch:any) => {
+        try {
+            const oldData = getStorage('notes');
+            const oldTrashDats = getStorage('trash');
+            dispatch({type: NotesDeleteActionType.REMOVE__NOTES});
+            setStorage('trash', oldTrashDats.filter((item: INote) => item.id !== deletedNote.id));
+            setStorage('notes', [deletedNote, ...oldData]);
 
-export const PutNotes = (id:string, note:INote) => {
+            dispatch({
+                type: NotesDeleteActionType.REMOVE__NOTES_SUCCESS,
+                payload: deletedNote
+            })
+        } catch(e) {
+            console.log(e)
+            dispatch({
+                type: NotesDeleteActionType.REMOVE__NOTES_SUCCESS,
+                payload: 'Произошла ошибка при восстановлении заметки'
+            })
+        }
+    }
+}
+
+
+export const PutNotes = (note:INote) => {
     return async (dispatch: any) => {
         try {
             dispatch({type: NotesPutActionType.PUT__NOTES});
@@ -87,6 +116,11 @@ export const PutNotes = (id:string, note:INote) => {
             })
             setStorage('notes', newData)
             
+            dispatch({
+                type: ContentActionType.CHANGE_CONTENT,
+                payload: note
+            })
+                        
             dispatch({
                 type: NotesPutActionType.PUT__NOTES_SUCCESS,
                 payload: note
@@ -100,3 +134,4 @@ export const PutNotes = (id:string, note:INote) => {
         }
     }
 }
+

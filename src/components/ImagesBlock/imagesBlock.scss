@@ -4,25 +4,35 @@
     max-height: 500px;
     overflow: hidden;
     display: flex;
+    transition-duration: 0.3s;
     // flex-wrap: wrap;
     &__item{
-        
+        transition-duration: 0.3s;
         position: relative;
         img{
+            transition-duration: 0.3s;
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
         button{
             position: absolute;
-            font-size: 45px;
             font-weight: 700;
+            width: 20px;
+            height: 20px;
+            padding: 4px;
             color: red;
             right: 5px;
             top: 5px;
-            transform: rotate(45deg);
+            // transform: rotate(45deg);
             opacity: 0;
             transition-duration: 0.3s;
+
+            svg{
+                fill: red;
+                width: 100%;
+                height: 100%;
+            }
         }
         &:hover{
             button{

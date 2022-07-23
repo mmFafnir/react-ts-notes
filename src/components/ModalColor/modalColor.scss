@@ -6,6 +6,15 @@
     border-radius: 10px;
     background-color: #fff;
     padding: 10px;
+    z-index: 10;
+    opacity: 0;
+    transition-duration: 0.3s;
+    &.active{
+        opacity: 1;
+    }
+    &.close{
+        opacity: 0;
+    }
     &__wrapper{
         width: 100%;
         height: 100%;
@@ -29,6 +38,31 @@
             }
         }   
     }
+}
 
-    
+@media (max-width: 500px) {
+    .modal-color{
+        position: fixed;
+        left: 0px;
+        top: -100%;
+        bottom: auto;
+        width: 100%;
+        z-index: 149;
+        transition-duration: 0.5s;
+        
+        &__body{
+            flex-wrap: wrap;
+            justify-content: center;
+
+            button{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    &.active{
+        top: 50px;
+    }
+    .close{
+        top: -100%;
+    }    
 }

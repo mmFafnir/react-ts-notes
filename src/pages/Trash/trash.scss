@@ -1,0 +1,33 @@
+
+
+.trash-page{
+    flex: 1 1 auto;
+    position: relative;
+    &__wrapper{
+        // padding-top: 50px;
+        height: 100%;
+        width: 100%;
+    }
+}
+.empty-notify{
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+}
+.trash-actions{
+    position: relative;
+    z-index: 100    ;
+    button{
+        position: relative;
+
+        .x,.arrow{
+            position: absolute;
+            fill: #fff;
+            width: 7px;
+            height: 7px;
+            left: 14px;
+            top: 16px;
+        
+        }
+    }
+}

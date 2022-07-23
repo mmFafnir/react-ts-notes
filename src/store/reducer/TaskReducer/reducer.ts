@@ -1,5 +1,4 @@
 
-import { useTypeSelector } from "../../../hooks/useTypeSelector";
 import { TasksDeleteAction, TasksDeleteActionType } from "./deleteInteface";
 import { TasksGetAction, TasksGetActionType } from "./getInteface";
 import { TasksPostAction, TasksPostActionType } from "./postInterface";
@@ -17,6 +16,7 @@ type ActionType = TasksGetAction | TasksPostAction | TasksDeleteAction | TasksPu
 export const tasksReducer = (state = initialState, action:ActionType):TasksState => {
 
     switch(action.type) {
+
         //Загрузка всех заметок
         case TasksGetActionType.FETCH__TASKS:
             return {loading: true, error: null, data: []}

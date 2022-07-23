@@ -1,0 +1,13 @@
+.label-page{
+    padding-top: 40px;
+    flex: 1 1 auto;
+
+    &__wrapper{
+        width: 100%;
+    }
+    h2{
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+}
