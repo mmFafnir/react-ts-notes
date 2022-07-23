@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-ts-notes/static/css/main.37aa65fc.css",
-    "main.js": "/react-ts-notes/static/js/main.60b282eb.js",
+    "main.js": "/react-ts-notes/static/js/main.cfc746e4.js",
     "static/media/XOsX.gif": "/react-ts-notes/static/media/XOsX.3fb26d9b3c3c823ae786.gif",
     "index.html": "/react-ts-notes/index.html",
     "main.37aa65fc.css.map": "/react-ts-notes/static/css/main.37aa65fc.css.map",
-    "main.60b282eb.js.map": "/react-ts-notes/static/js/main.60b282eb.js.map"
+    "main.cfc746e4.js.map": "/react-ts-notes/static/js/main.cfc746e4.js.map"
   },
   "entrypoints": [
     "static/css/main.37aa65fc.css",
-    "static/js/main.60b282eb.js"
+    "static/js/main.cfc746e4.js"
   ]
 }
