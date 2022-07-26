@@ -47,7 +47,6 @@ export const trashReducer = (state = initialState, action: ActionType) => {
             return {loading: true, error: null, data: state.data};
         
         case DeleteTrashActionType.DELETE_TRASH_NOTES__SUCCESS: {
-            console.log(state.data)
             return {loading: false, error: null, data: state.data.filter(note => note.id !== action.payload)};
         }
 

@@ -35,11 +35,14 @@
     &__types{
         display: flex;
         align-items: center;
-        button{
+        button, a{
             flex: 0 0 30px;
             height: 30px;
             padding: 5px;
             transition-duration: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             border-radius: 50%;
 
@@ -48,6 +51,10 @@
                 height: 100%;
                 fill: rgba(49, 46, 46, 0.761);
                 transition-duration: 0.3s;
+
+                path{
+                    fill: rgba(49, 46, 46, 0.761);
+                }
             }
 
             &:hover{
@@ -56,6 +63,9 @@
                     fill: rgba(33, 31, 31, 0.761);
                 }
             }
+        }
+        a{
+            padding: 6px;
         }
     }
 

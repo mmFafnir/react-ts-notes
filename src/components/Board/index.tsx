@@ -119,11 +119,11 @@ const Board:FC = () => {
     }
 
     const deleteTrashNotes = () => {
-        checkedNotes.forEach(id => {
-            console.log(id)            
+        checkedNotes.forEach(id => {            
             dispatch(DeleteTrashNotes(id))
         })
         closeBoard()
+        removeAllNotes()
     }
     
     const restoreTrashNotes = () => {        
@@ -132,6 +132,7 @@ const Board:FC = () => {
             dispatch(RestoreTrashNotes(note));
         })
         closeBoard()
+        removeAllNotes()
     }
 
     const removeAllNotes = () => {

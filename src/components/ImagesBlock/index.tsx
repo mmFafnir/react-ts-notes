@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import IImg from '../../types/img';
 
 import './imagesBlock.scss'
@@ -25,6 +25,7 @@ const ImagesBlock:FC<IProps> = ({
                 images.map((img, index) => (
 
                     <div 
+                        key={img.id}
                         className="images-block__item" 
                         style={
                             (images.length > 4 && (index == 0 || index == 1)) ? {flex: '0 1 280px'} :
@@ -47,4 +48,4 @@ const ImagesBlock:FC<IProps> = ({
     );
 };
 
-export default ImagesBlock;
+export default memo(ImagesBlock);

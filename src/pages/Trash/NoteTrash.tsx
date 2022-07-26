@@ -6,6 +6,7 @@ import { types } from '../../components/FormCreateNote';
 import ImagesBlock from '../../components/ImagesBlock';
 import Task from '../../components/Task';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
+import { msToDay } from '../../script/Date';
 import { DeleteTrashNotes, RestoreTrashNotes } from '../../store/action-creators/trash';
 import { CheckedNotesActionTypes } from '../../store/reducer/CheckedNotesReducer/CheckedNotesInterface';
 
@@ -24,7 +25,6 @@ const NoteTrash:FC<IProps> = ({note}) => {
 
     const listStyle = useTypeSelector(state => state.listStyle)
 
-
     const [checked , setChecked] = useState<boolean>(false);
 
     const restoreNote = () => {
@@ -37,6 +37,14 @@ const NoteTrash:FC<IProps> = ({note}) => {
     
     const hadnletCheckedNote = () => {
         setChecked(!checked)
+    }
+
+    const expiryDeleteHandler = () => {
+        const currentDate = Date.now();
+        const ms = currentDate - Number(note.change);
+        const days = msToDay(ms);
+        if(days < 7) return 
+        deleteNote()
     }
 
     useEffect(() => {
@@ -66,7 +74,7 @@ const NoteTrash:FC<IProps> = ({note}) => {
         if(noteDom.parentElement && noteDom.parentElement.style.opacity === '0') {
             noteDom.parentElement.style.opacity = '1'
         }
-        
+        expiryDeleteHandler()
     }, [])
 
     return (
@@ -98,7 +106,7 @@ const NoteTrash:FC<IProps> = ({note}) => {
                     {
                         
                         (note.type === types.NOTE) ? (
-                            <textarea style={{resize: 'none'}} defaultValue={note.text} placeholder='Текст Заметки'>
+                            <textarea style={{resize: 'none', overflow: 'hidden'}} defaultValue={note.text} placeholder='Текст Заметки'>
                                 
                             </textarea>
                         ) : (

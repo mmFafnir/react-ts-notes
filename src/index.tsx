@@ -7,10 +7,11 @@ import { store } from './store';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory, createMemoryHistory } from 'history';
 
 import './index.css';
 import App from './App';
+import CustomRouter from './components/CustomRouter';
 
 const history = createBrowserHistory()
 
@@ -21,9 +22,15 @@ const root = ReactDOM.createRoot(
 root.render(
   // basename={process.env.PUBLIC_URL}
   // tslint:disable-next-line
-  <Router  >
-    <Provider store={store}>
-      <App/>  
-    </Provider>
-  </Router>, 
+  
+  <CustomRouter 
+    children={
+      <Provider  store={store}>
+        <App/>  
+      </Provider>
+    }
+    basename={''}
+    history={history}
+  />
+  , 
 );

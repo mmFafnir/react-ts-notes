@@ -202,14 +202,20 @@ const Note:FC<IProps> = ({ note }) => {
                 <ImagesBlock setImages={setImagesValues} images={imagesValues} />
                 <div className="note__header">
                     <FixedIcon defaultFixed={note.fixed} getValue={setCurrentFixed} classes={['note__fixed-icon']}/>
-                    <input className='note__title' placeholder='Заголовок' type="text" defaultValue={currentTitle} name='title'/>
+                    
+                    <input 
+                        className='note__title' 
+                        placeholder={imagesValues.length === 0 ? 'Заголовок' : ''} 
+                        type="text" 
+                        defaultValue={currentTitle} 
+                        name='title'/>
                 </div>
                 <div className="note__body">
                     {                        
                         (note.type === types.NOTE) ? (
                             <Textarea
                                 classes={["note__textarea"]}
-                                placeholder={placeholder}
+                                placeholder={imagesValues.length === 0 ? placeholder : ''}
                                 valueDef={note.text} 
                                 setReset={setReset}
                                 reset={reset}
@@ -227,8 +233,8 @@ const Note:FC<IProps> = ({ note }) => {
                             })
                         )
                     }
-                    {<LabelsBlock noteId={note.id}/>}
                 </div>
+                    {<LabelsBlock noteId={note.id}/>}
                 <div className="note__footer">
                     <div>
                         <ActionNote

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import getDate from '../../script/getDate';
+import {getDate} from '../../script/Date';
 import { deleteNotes, PutNotes } from '../../store/action-creators/notes';
 import { deleteTasks, PutTasks } from '../../store/action-creators/tasks';
 import { ContentActionType } from '../../store/reducer/ContentReducer/contentInterface';
@@ -132,7 +132,7 @@ const FormEditingNotes:FC<IProps> = ({
         }
         if(note.type === types.TASK) {
             saveNoteTasks()
-        }
+        }   
         animCloseNote()
         document.querySelector('body')?.classList.remove('lock');
         

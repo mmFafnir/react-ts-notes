@@ -1,0 +1,27 @@
+.paint{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    z-index: 500;
+    background-color: #feefc3;
+    display: flex;
+    flex-direction: column;
+    &__wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 1 auto;
+
+    }
+    .canvas{
+    }
+    canvas{
+        background-color: #fff;
+        flex: 1 1 auto;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.457);
+        // border: solid 1px rgba(0, 0, 0, 0.441);
+    }
+
+}

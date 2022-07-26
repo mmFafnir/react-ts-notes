@@ -41,8 +41,9 @@ export const PostTrashNotes = (note:INote|ITaskNote) => {
             
             // const response = await axios.post(`${baseUrl}/trash`);
             const data:ITrashNotes = getStorage('trash') ? getStorage('trash') : [];
+            note.change = Date.now();
             setStorage('trash', [note, ...data]);
-
+            
             dispatch({
                 type: postTrashActionType.POST_TRASH_NOTES__SUCCESS,
                 payload: note

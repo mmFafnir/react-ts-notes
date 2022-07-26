@@ -29,7 +29,7 @@ const Trash:FC= () => {
 
     const listStyle = useTypeSelector(state => state.listStyle);
 
-    
+    console.log(data)
     useEffect(() => {
         dispatch(initialTrashNotes())
     }, [])
@@ -37,7 +37,11 @@ const Trash:FC= () => {
     return (
         <TemplatePage classes={['trash-page']}>
             <div className="trash-page__wrapper">
-                {data.length == 0 ? <p className='empty-notify'>Удаленных заметок нет в наличии</p> : null}
+                {data.length == 0 ? (
+                    <p className='empty-notify'>Удаленных заметок нет в наличии</p>
+                ) : (
+                    <h2>По истечению 7 дней заметка будет удалена окончательно</h2>
+                )}
                 <StackGrid gutterWidth={20} gutterHeight={20} columnWidth={listStyle.width}>
                     {
                         data.map(note => (

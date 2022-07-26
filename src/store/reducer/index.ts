@@ -1,5 +1,6 @@
 
 import { combineReducers } from 'redux';
+import { canvasReducer } from './CanvasReducer/reducer';
 import { checkedNotesReducer } from './CheckedNotesReducer/reducer';
 import { contentReducer } from './ContentReducer/reducer';
 import { currentNoteReducer } from './CurrentNoteReducer/reducer';
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
     sidebarOpen: sidebarReducer, 
     currentNote: currentNoteReducer,
     checkedNotes: checkedNotesReducer, 
+    canvas: canvasReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

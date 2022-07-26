@@ -26,6 +26,7 @@ import checkDevice from './script/checkDevice';
 
 import './App.scss';
 import './scss/animation.scss';
+import Paint from './pages/Paint';
 
 export enum RoutePaths {
   MAIN = '/',
@@ -57,7 +58,6 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log('work')
       dispatch({
         type: ContentActionType.INITIAL_CONTENT,
         payload: {tasks: tasks.data, notes: notes.data}
@@ -81,6 +81,7 @@ function App() {
       <div className={`App__wrapper ${sidebarOpen ? 'mob' : ''}`}>
         
         <Routes>
+          
           <Route path='/' element={
             <Main />
           } />
@@ -98,6 +99,9 @@ function App() {
             <Label />
           }/>
 
+          <Route path='paint' element={
+            <Paint />
+          } />
         </Routes>
 
       </div>

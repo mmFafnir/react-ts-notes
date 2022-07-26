@@ -95,7 +95,7 @@ const Sidebar:FC<IProps> = ({setModalLabel}) => {
                                 if(link.type === NavTypes.BUTTON) {
                                     return (
                                         <span
-                                            key={link.path}
+                                            key={link.title}
                                             onClick={link.fnc}
                                             className='sidebar__link'
                                         >
