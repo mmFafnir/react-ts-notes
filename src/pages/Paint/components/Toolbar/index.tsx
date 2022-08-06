@@ -96,7 +96,7 @@ const Toolbar:FC = () => {
             
     }
 
-    const sevaCanvasImg = useCallback(() => {
+    const sevaCanvasImg = () => {
         const dataUrl = canvas?.toDataURL(); 
         if(!dataUrl) return;
         let link = document.createElement('a');
@@ -105,7 +105,7 @@ const Toolbar:FC = () => {
         link.href = dataUrl;
         link.click();
         
-    }, [])
+    }
 
     const goBackHandler = () => {
         navigate("/", { state:  "/paint" });

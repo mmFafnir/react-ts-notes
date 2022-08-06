@@ -5,9 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
-import { BrowserRouter as Router } from 'react-router-dom';
-
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 import './index.css';
 import App from './App';
@@ -29,7 +27,7 @@ root.render(
         <App/>  
       </Provider>
     }
-    basename={''}
+    basename={``}
     history={history}
   />
   , 

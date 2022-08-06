@@ -13,7 +13,29 @@ export default class Brush extends Tool {
         this.canvas.onmouseup = this.mouseUpHandler.bind(this)
         this.canvas.onmousedown = this.mouseDownHandler.bind(this)
         this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
+
+        this.canvas.ontouchend = this.touchUpHandler.bind(this)
+        this.canvas.ontouchstart = this.touchDownHandler.bind(this)
+        this.canvas.ontouchmove = this.touchMoveHandler.bind(this)
     }
+
+
+    touchUpHandler(e:TouchEvent) {
+        this.mouseDown = false
+    }
+    touchDownHandler(e: TouchEvent) {
+        this.mouseDown = true
+        this.ctx.beginPath()
+        let target = e.target as HTMLElement
+        this.ctx.moveTo(e.touches[0].pageX - target.offsetLeft, e.touches[0].pageY - target.offsetTop)
+    }
+    touchMoveHandler(e: TouchEvent) {
+        if(this.mouseDown) {
+            let target = e.target as HTMLElement
+                this.draw(e.touches[0].pageX - target.offsetLeft, e.touches[0].pageY - target.offsetTop)
+        }
+    }
+
 
     mouseUpHandler(e:MouseEvent) {
         this.mouseDown = false

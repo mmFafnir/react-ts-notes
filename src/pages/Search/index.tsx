@@ -29,14 +29,11 @@ const SearchBlock:FC= () => {
 
     const searchSort = () => {
 
-        const searchValue = decodeURI(location.search.replace('?=', '').toLocaleLowerCase());
-
+        const searchValue = decodeURI(location.search.replace('?=', '')).toLocaleLowerCase();
         const res:(ITaskNote|INote)[] = [];
         content.data.forEach(note => {
             if(note.title.toLocaleLowerCase().includes(searchValue)) {
-                console.log(note.title.toLocaleLowerCase())
                 res.push(note)
-                
             }
             if(note.text?.toLocaleLowerCase().includes(searchValue)){
                 if(!res.find(item => item.id === note.id)){
@@ -67,7 +64,6 @@ const SearchBlock:FC= () => {
                 titleDom.innerHTML = `<p className='note__title'>${
                     note.title.replace(new RegExp(searchValue, regex), "<span style='color:Red; display:inline;'>" + searchValue + "</span>")
                 }</p>`
-                console.log(titleDom)
             }
 
             const textDom = noteDom?.querySelector('.note__textarea');

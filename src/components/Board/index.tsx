@@ -25,7 +25,6 @@ const Board:FC = () => {
 
     const location = useLocation();
 
-
     const dispatch = useDispatch<any>();
 
     const content = useTypeSelector(state => state.content);
@@ -106,7 +105,6 @@ const Board:FC = () => {
     const deleteAllNotes = () => { 
         checkedNotes.forEach(id => {
             const note = getCurrentContent().filter((item:any) => id == item.id)[0];
-            console.log(id)            
             if(note.type === types.NOTE){
                 dispatch(deleteNotes(id))
                 
@@ -115,7 +113,7 @@ const Board:FC = () => {
             }
         })
         closeBoard()
-        removeAllNotes()
+
     }
 
     const deleteTrashNotes = () => {
@@ -123,7 +121,6 @@ const Board:FC = () => {
             dispatch(DeleteTrashNotes(id))
         })
         closeBoard()
-        removeAllNotes()
     }
     
     const restoreTrashNotes = () => {        
@@ -132,7 +129,6 @@ const Board:FC = () => {
             dispatch(RestoreTrashNotes(note));
         })
         closeBoard()
-        removeAllNotes()
     }
 
     const removeAllNotes = () => {
@@ -144,6 +140,7 @@ const Board:FC = () => {
     const closeBoard = () => {
         setActive(false);
         setOpenModalColor(false);
+        removeAllNotes();
         
     }
 
@@ -159,9 +156,7 @@ const Board:FC = () => {
     useEffect(() => {
         if(checkedNotes.length > 0) {
             setActive(true)
-        } else if(active) {
-            closeBoard()
-        }
+        } 
     }, [checkedNotes])
 
     useEffect(() => {

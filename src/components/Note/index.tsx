@@ -182,7 +182,17 @@ const Note:FC<IProps> = ({ note }) => {
     }, [])
 
     return (
-        <div id={note.id} className={`note ${checked ?  'checked' : ''}`} style={{width:width}}> 
+        <div 
+            onMouseMove={() => {
+                // const parent = document.getElementById(note.id)?.parentElement;
+                // const zIndex =  
+                // parent!.style.zIn   dex = '2'
+            }}
+            draggable={true} 
+            id={note.id} 
+            className={`note ${checked ?  'checked' : ''}`} 
+            style={{width:width}}
+        > 
             
             <button
                 onClick={hadnletCheckedNote} 

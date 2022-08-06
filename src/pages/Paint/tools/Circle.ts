@@ -18,7 +18,37 @@ export default class Circle extends Tool {
         this.canvas.onmouseup = this.mouseUpHandler.bind(this)
         this.canvas.onmousedown = this.mouseDownHandler.bind(this)
         this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
+
+        
+        this.canvas.ontouchend = this.touchUpHandler.bind(this)
+        this.canvas.ontouchstart = this.touchDownHandler.bind(this)
+        this.canvas.ontouchmove = this.touchMoveHandler.bind(this)
     }
+
+    touchUpHandler(e:TouchEvent) {
+        this.mouseDown = false
+    }
+
+    touchDownHandler(e:TouchEvent) {
+        this.mouseDown = true
+        this.ctx.beginPath()
+        let target = e.target as HTMLElement;
+        this.startX = e.touches[0].pageX - target.offsetLeft;
+        this.startY = e.touches[0].pageY - target.offsetTop;
+        this.saved = this.canvas.toDataURL()
+    }
+
+    touchMoveHandler(e:TouchEvent) {
+        if(this.mouseDown) {
+            let target = e.target as HTMLElement
+            let currentX = e.touches[0].pageX - target.offsetLeft;
+            let currentY = e.touches[0].pageY - target.offsetTop;
+            let width = currentX - this.startX;
+            let height = currentY - this.startY;
+            this.draw(this.startX, this.startY, width, height)
+        }
+    }
+
 
     mouseUpHandler(e:MouseEvent) {
         this.mouseDown = false
